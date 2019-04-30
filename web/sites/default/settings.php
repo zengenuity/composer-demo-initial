@@ -780,3 +780,4 @@ $databases['default']['default'] = [
    'prefix' => '',
    'username' => getenv('MYSQL_USER'),
 ];
+
