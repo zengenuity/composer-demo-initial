@@ -32,6 +32,7 @@ set('allow_anonymous_stats', false);
 host('dtclass.com')
     ->user('composerdemo')
     ->port(2200)
+    ->addSshOption('StrictHostKeyChecking', 'no')
     ->set('deploy_path', '~/{{application}}');    
     
 
