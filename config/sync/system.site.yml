@@ -1,5 +1,5 @@
 uuid: 4134da2d-948a-4179-91dd-3da410181519
-name: 'Publication that Deploys Automatically from Master'
+name: 'Publication that Deploys ONLY from Master'
 mail: demo@example.com
 slogan: ''
 page:
