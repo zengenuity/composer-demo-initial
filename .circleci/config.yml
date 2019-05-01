@@ -4,6 +4,7 @@ jobs:
     docker:
       - image: circleci/php:latest
     steps:
+      - add_ssh_keys
       - run: curl -LO https://deployer.org/deployer.phar
       - run: sudo mv deployer.phar /usr/local/bin/dep
       - run: sudo chmod +x /usr/local/bin/dep
