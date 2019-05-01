@@ -4,7 +4,7 @@ namespace Deployer;
 require 'recipe/common.php';
 
 // Project name
-set('application', 'composer-demo-deploy');
+set('application', 'composer-demo-deployer');
 
 // Project repository
 set('repository', 'git@github.com:zengenuity/composer-demo.git');
@@ -14,17 +14,16 @@ set('git_tty', true);
 
 // Shared files/dirs between deploys 
 set('shared_files', [
-	'.env',
-	'web/sites/default/services.yml',
+    '.env',
+    'web/sites/default/services.yml', 
 ]);
-
-set('shared_dirs', [ 
-	'web/sites/default/files',
+set('shared_dirs', [
+    'web/sites/default/files',
 ]);
 
 // Writable dirs by web server 
 set('writable_dirs', [
-	'web/sites/default/files',
+    'web/sites/default/files',
 ]);
 set('allow_anonymous_stats', false);
 
@@ -36,7 +35,15 @@ host('dtclass.com')
     ->set('deploy_path', '~/{{application}}');    
     
 
-// Tasks
+// Drush CLI
+set('drush', 'vendor/bin/drush');
+
+// Task
+task('drush:maint_mode:enable', '{{drush}} sset system.maintenance_mode TRUE');
+task('drush:maint_mode:disable', '{{drush}} sset system.maintenance_mode FALSE');
+task('drush:cache_rebuild', '{{drush}} cr');
+task('drush:config_import', '{{drush}} cim -y');
+task('drush:update_db', '{{drush}} updatedb -y');
 
 desc('Deploy your project');
 task('deploy', [
@@ -48,8 +55,13 @@ task('deploy', [
     'deploy:shared',
     'deploy:writable',
     'deploy:vendors',
+    'drush:maint_mode:enable',
+    'drush:update_db',
+    'drush:config_import',
     'deploy:clear_paths',
     'deploy:symlink',
+    'drush:maint_mode:disable',
+    'drush:cache_rebuild',
     'deploy:unlock',
     'cleanup',
     'success'
