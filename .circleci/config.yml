@@ -6,4 +6,4 @@ jobs:
     steps:
       - checkout
       - run: composer install --dev
-      - runi: ./vendor/bin/dep deploy
+      - run: ./vendor/bin/dep deploy
